@@ -1,5 +1,7 @@
 # Alexandaria — E-Library & Reference Materials Platform
 
+[View this project on GitHub](https://github.com/MakindeAyomide/elibrary)
+
 A full-stack web app for uploading, searching, sharing, and downloading PDF reference materials, each with its own cover image.
 
 ## Stack
