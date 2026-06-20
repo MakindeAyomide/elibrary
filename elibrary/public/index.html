@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alexandaria — E-Library & Reference Materials</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">A</span>
+      <span class="brand-name">Alexandaria</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="user-chip" id="userChip">
+        <span id="userInitial">?</span>
+      </div>
+      <button class="btn btn-primary" id="openUploadBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+        Upload
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="shell">
+
+  <section class="hero">
+    <h1>Find. Read. Share.</h1>
+    <p>Your library of PDFs and reference materials — searchable, organized, and always within reach.</p>
+  </section>
+
+  <section class="controls">
+    <div class="search-bar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" id="searchInput" placeholder="Search by title, author, or keyword…">
+    </div>
+    <select id="categoryFilter" class="select">
+      <option value="all">All categories</option>
+    </select>
+    <select id="sortFilter" class="select">
+      <option value="newest">Newest first</option>
+      <option value="oldest">Oldest first</option>
+      <option value="title">Title A–Z</option>
+      <option value="downloads">Most downloaded</option>
+    </select>
+  </section>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="all">All Materials</button>
+    <button class="tab" data-tab="mine">My Uploads</button>
+  </nav>
+
+  <section id="statusBar" class="status-bar"></section>
+
+  <section id="grid" class="grid"></section>
+
+  <section id="emptyState" class="empty-state hidden">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    <h3>Nothing here yet</h3>
+    <p id="emptyStateText">Be the first to upload a reference material.</p>
+  </section>
+
+</main>
+
+<!-- Upload Modal -->
+<div class="modal-overlay hidden" id="uploadOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Upload a material</h2>
+      <button class="icon-btn" id="closeUploadBtn">&times;</button>
+    </div>
+
+    <form id="uploadForm" class="modal-body">
+      <div class="field-row">
+        <div class="field">
+          <label for="fTitle">Title *</label>
+          <input type="text" id="fTitle" name="title" required placeholder="e.g. Operating Systems — Synchronization Notes">
+        </div>
+        <div class="field">
+          <label for="fAuthor">Author *</label>
+          <input type="text" id="fAuthor" name="author" required placeholder="e.g. A. Tanenbaum">
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="fCategory">Category *</label>
+          <input type="text" id="fCategory" name="category" required list="categoryList" placeholder="e.g. Computer Science">
+          <datalist id="categoryList"></datalist>
+        </div>
+        <div class="field">
+          <label for="fTags">Tags <span class="muted">(comma separated)</span></label>
+          <input type="text" id="fTags" name="tags" placeholder="e.g. distributed systems, exam prep">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="fDescription">Description</label>
+        <textarea id="fDescription" name="description" rows="3" placeholder="A short summary of what's inside…"></textarea>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="fPdf">PDF file *</label>
+          <div class="dropzone" id="pdfDrop">
+            <input type="file" id="fPdf" name="pdf" accept="application/pdf" required>
+            <span class="dz-text" id="pdfText">Choose or drop a PDF</span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="fCover">Cover image</label>
+          <div class="dropzone" id="coverDrop">
+            <input type="file" id="fCover" name="cover" accept="image/*">
+            <span class="dz-text" id="coverText">Choose or drop a cover image</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="field" id="uploaderField">
+        <label for="fUploader">Your name *</label>
+        <input type="text" id="fUploader" name="uploadedBy" required placeholder="Used to track your uploads on this device">
+      </div>
+
+      <div class="form-error hidden" id="formError"></div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" id="cancelUploadBtn">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="submitUploadBtn">
+          <span id="submitText">Upload material</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Detail / Share Modal -->
+<div class="modal-overlay hidden" id="detailOverlay">
+  <div class="modal modal-narrow">
+    <div class="modal-header">
+      <h2 id="detailTitle">Material</h2>
+      <button class="icon-btn" id="closeDetailBtn">&times;</button>
+    </div>
+    <div class="modal-body" id="detailBody"></div>
+  </div>
+</div>
+
+<div class="toast hidden" id="toast"></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+[
+  {
+    "id": "08f773dc-e195-45b5-8eee-1532fc1428e3",
+    "title": "Web Application Development",
+    "author": "Professor Iwansokun",
+    "category": "Computer Science",
+    "description": "",
+    "tags": [],
+    "uploadedBy": "Makinde Daniel",
+    "pdfFilename": "7f60fe4b-f00b-41ef-91c6-0d7066eb013e.pdf",
+    "pdfOriginalName": "XML Basics.pdf",
+    "coverFilename": null,
+    "fileSize": 726807,
+    "uploadDate": "2026-06-20T17:53:26.226Z",
+    "downloads": 1
+  },
+  {
+    "id": "a5a8cdcc-faca-462c-ba07-d2a7f460d559",
+    "title": "Web Application Development",
+    "author": "Professor Iwansokun",
+    "category": "Computer Science",
+    "description": "",
+    "tags": [],
+    "uploadedBy": "Makinde Daniel",
+    "pdfFilename": "49d921ef-4ffa-4aed-83f8-c7827ec7ac0e.pdf",
+    "pdfOriginalName": "Introduction to MySQL.pdf",
+    "coverFilename": null,
+    "fileSize": 1563367,
+    "uploadDate": "2026-06-20T17:59:04.110Z",
+    "downloads": 0
+  }
+]
